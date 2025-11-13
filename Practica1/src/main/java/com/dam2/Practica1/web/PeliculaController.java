@@ -5,6 +5,8 @@ import com.dam2.Practica1.domain.Pelicula;
 import com.dam2.Practica1.service.PeliculaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
@@ -59,6 +61,10 @@ public class PeliculaController {
         return service.getMejoresPeliculas();
     }
 
+    /**
+     * Actividad 4, ejercicio 2
+     * @return
+     */
     @GetMapping("/reproducirAsync")
     public String reproducirPeliculasAsync(){
         long inicio = System.currentTimeMillis();
@@ -72,6 +78,16 @@ public class PeliculaController {
 
         long fin = System.currentTimeMillis();
         return "Tiempo total (asíncrono): " + (fin - inicio) + " ms";
+    }
+
+    /**
+     * Actividad 4, ejercicio 3
+     */
+    @PostMapping("/cargarPeliculas/{nombreDirectorio}")
+    public void cargarPeliculasDirectorio(@PathVariable String nombreDirectorio) throws IOException {
+        String rutaDir = "src/main/resources/" + nombreDirectorio;
+
+        service.importarCarpeta(rutaDir);
     }
 
 }
