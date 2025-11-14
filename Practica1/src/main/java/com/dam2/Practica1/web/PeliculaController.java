@@ -16,10 +16,10 @@ import java.util.List;
 public class PeliculaController {
     private final PeliculaService service;
 
-    @GetMapping
+   /* @GetMapping
     public List<Pelicula> listar() {
         return service.listar();
-    }
+    }*/
 
     @GetMapping("/{id}")
     public Pelicula buscarPorId(@PathVariable Long id) {
@@ -88,6 +88,11 @@ public class PeliculaController {
         String rutaDir = "src/main/resources/" + nombreDirectorio;
 
         service.importarCarpeta(rutaDir);
+    }
+
+    @GetMapping("/peliculas")
+    public List<Pelicula> mostrarPeliculas(){
+        return service.listarPeliculas();
     }
 
 }

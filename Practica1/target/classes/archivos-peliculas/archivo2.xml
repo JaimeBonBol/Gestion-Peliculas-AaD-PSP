@@ -11,4 +11,10 @@
         <fechaEstreno>2020-12-25</fechaEstreno>
         <sinopsis>Un músico descubre</sinopsis>
     </pelicula>
+    <pelicula>
+        <titulo>Batman</titulo>
+        <duracion>135</duracion>
+        <fechaEstreno>2016-12-25</fechaEstreno>
+        <sinopsis>Caballero oscuro</sinopsis>
+    </pelicula>
 </peliculas>

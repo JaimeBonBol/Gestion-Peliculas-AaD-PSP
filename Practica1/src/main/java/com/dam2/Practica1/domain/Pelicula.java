@@ -1,5 +1,7 @@
 package com.dam2.Practica1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -34,6 +36,7 @@ public class Pelicula {
 
     @ManyToOne
     @JoinColumn(name = "director_id")
+    @JsonManagedReference
     private Director director;
 
     @ManyToMany
@@ -42,5 +45,12 @@ public class Pelicula {
             joinColumns = @JoinColumn(name = "pelicula_id"),        // FK de esta entidad
             inverseJoinColumns = @JoinColumn(name = "actor_id")     // FK de la otra entidad
     )
+    @JsonIgnore
     private List<Actor> actores;
+
+    // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
+    public void addActor(Actor a){
+        actores.add(a);
+        a.getPeliculas().add(this);
+    }
 }
