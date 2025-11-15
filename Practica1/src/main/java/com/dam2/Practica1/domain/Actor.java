@@ -1,5 +1,6 @@
 package com.dam2.Practica1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Actor {
     private String nombre;
 
     @ManyToMany(mappedBy = "actores")
+    @JsonIgnore
     private List<Pelicula> peliculas;
 
     // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
