@@ -50,7 +50,11 @@ public class Pelicula {
 
     // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
     public void addActor(Actor a){
-        actores.add(a);
-        a.getPeliculas().add(this);
+        if (!actores.contains(a)) {
+            actores.add(a);
+        }
+        if (!a.getPeliculas().contains(this)) {
+            a.getPeliculas().add(this);
+        }
     }
 }

@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
@@ -23,6 +24,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Stream;
 
 @Service
@@ -205,4 +207,75 @@ public class PeliculaService {
 
         return CompletableFuture.completedFuture(null);
     }
+
+
+    /**
+     * Metodos necesarios para la actividad 4
+     */
+    private HashMap<String, Integer> votacion = new HashMap<>();
+    Semaphore sem = new Semaphore(5);
+    Random random = new Random();
+
+    public HashMap<String, Integer> votacionOscars(int jurados){
+        long inicio = System.currentTimeMillis();
+
+        // Limpiar el HashMap
+        votacion.clear();
+
+        List<Pelicula> peliculas = peliculaRepository.findAll();
+        List<String> titulosPeliculas = new ArrayList<>();
+
+        for (Pelicula pelicula : peliculas){
+            titulosPeliculas.add(pelicula.getTitulo());
+        }
+
+        List<CompletableFuture<Void>> tareas = new ArrayList<>();
+
+        // Seghún el numero de jurados que le pasemos se ejecutará x veces.
+        for (int i = 0; i < jurados; i++) {
+            tareas.add(votar(titulosPeliculas, i + 1));
+        }
+
+        // Esperar a que terminen todos los jurados
+        CompletableFuture.allOf(tareas.toArray(new CompletableFuture[0])).join();
+
+        System.out.println("Votaciones finalizadas, resultado:");
+        System.out.println(votacion);
+
+        long fin = System.currentTimeMillis();
+        long tiempoTotalSeg = (fin - inicio) ;
+
+        System.out.println("Las votaciones han durado " + tiempoTotalSeg + " milisegundos, gracias por su paciencia");
+
+        return votacion;
+
+    }
+
+    @Async("taskExecutor")
+    public CompletableFuture<Void> votar(List<String> titulosCandidatas, int idJurado){
+        try {
+            System.out.println("Jurado " + idJurado + " procede a votar");
+
+            // Limita a 5 jurados simultáneos solo para actualizar el HashMap
+            sem.acquire();
+            try {
+                for (String titulo : titulosCandidatas){
+                    int puntuacion = random.nextInt(11); // 0–10 puntos
+                    System.out.println("Jurado " + idJurado + " da " + puntuacion + " puntos a " + titulo);
+
+                    synchronized (votacion){
+                        votacion.put(titulo, votacion.getOrDefault(titulo, 0) + puntuacion);
+                    }
+                }
+            } finally {
+                sem.release(); // liberamos inmediatamente
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return CompletableFuture.completedFuture(null);
+    }
+
 }

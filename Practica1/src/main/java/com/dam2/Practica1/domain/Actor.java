@@ -26,8 +26,8 @@ public class Actor {
     private List<Pelicula> peliculas;
 
     // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
-    public void addPelicula(Pelicula p){
-        peliculas.add(p);
-        p.getActores().add(this);
-    }
+//    public void addPelicula(Pelicula p){
+//        peliculas.add(p);
+//        p.getActores().add(this);
+//    }
 }

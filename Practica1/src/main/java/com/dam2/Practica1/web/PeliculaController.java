@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
@@ -93,6 +94,17 @@ public class PeliculaController {
     @GetMapping("/peliculas")
     public List<Pelicula> mostrarPeliculas(){
         return service.listarPeliculas();
+    }
+
+
+    /**
+     * Activiad 4, ejercicio 4
+     * @param jurados numero de jurados
+     * @return mapa con los resultados
+     */
+    @GetMapping("/api/oscar/{jurados}")
+    public HashMap<String, Integer> votacionesOscars(@PathVariable int jurados) throws InterruptedException {
+        return service.votacionOscars(jurados);
     }
 
 }

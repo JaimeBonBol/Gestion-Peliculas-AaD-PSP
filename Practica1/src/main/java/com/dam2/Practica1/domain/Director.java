@@ -1,5 +1,6 @@
 package com.dam2.Practica1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class Director {
 
     // Relación 1:N con Pelicula, esta mapeado con el atributo en la clase Pelicula.
     @OneToMany(mappedBy = "director")
-    @JsonIgnore
+    @JsonBackReference
     private List<Pelicula> peliculas;
 
 }
