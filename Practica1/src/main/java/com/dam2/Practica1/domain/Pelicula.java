@@ -57,4 +57,9 @@ public class Pelicula {
             a.getPeliculas().add(this);
         }
     }
+
+//    public void addActor(Actor actor){
+//        actores.add(actor);
+//        actor.getPeliculas().add(this);
+//    }
 }

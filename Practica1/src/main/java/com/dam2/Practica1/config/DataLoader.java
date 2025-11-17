@@ -158,19 +158,16 @@ public class DataLoader {
             // RELACIÓN MANY-TO-MANY
             // (Usando tus métodos de sincronización)
             // ======================================
+            // COMO PROFESOR LO TIENE
 //            matthew.addPelicula(interstellar);
 //            hathaway.addPelicula(interstellar);
 //            foxx.addPelicula(soul);
-//
-//            /* Hace falta añadirlo también?*/
-//            interstellar.addActor(matthew);
-//            interstellar.addActor(hathaway);
-//            soul.addActor(foxx);
-//
-//
-//            actorRepo.save(matthew);
-//            actorRepo.save(hathaway);
-//            actorRepo.save(foxx);
+
+
+//            peliculaRepo.save(interstellar);
+//            peliculaRepo.save(soul);
+
+
 
             // RELACIÓN MANY-TO-MANY
             interstellar.addActor(matthew);
