@@ -4,6 +4,9 @@ package com.dam2.Practica1.web;
 import com.dam2.Practica1.domain.Pelicula;
 import com.dam2.Practica1.service.PeliculaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -82,13 +85,16 @@ public class PeliculaController {
     }
 
     /**
-     * Actividad 4, ejercicio 3
+     * Actividad 4, ejercicio 3, se le pasa el nombre del directorio donde se encuentran los archivos por la ruta, para
+     * así hacerlo dinámico, por si hay varios directorios con archivos
      */
     @PostMapping("/cargarPeliculas/{nombreDirectorio}")
-    public void cargarPeliculasDirectorio(@PathVariable String nombreDirectorio) throws IOException {
+    public ResponseEntity<?> cargarPeliculasDirectorio(@PathVariable String nombreDirectorio) throws IOException {
         String rutaDir = "src/main/resources/" + nombreDirectorio;
 
         service.importarCarpeta(rutaDir);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Archivos importados correctamente");
     }
 
     @GetMapping("/peliculas")

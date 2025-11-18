@@ -34,6 +34,14 @@ public class PeliculaService {
     private final List<Pelicula> peliculas = new ArrayList<>();
     private final PeliculaRepository peliculaRepository;
 
+    /*public PeliculaService() {
+        peliculas.add(new Pelicula(1L, "Interstellar", 169, LocalDate.of(2014, 11, 7),
+                "Exploradores espaciales buscan un nuevo hogar para la humanidad.", 10, null, null, null));
+        peliculas.add(new Pelicula(2L, "The Dark Knight", 152, LocalDate.of(2008, 7, 18),
+                "Batman enfrenta al Joker en una lucha por el alma de Gotham.", 5, null, null, null));
+        peliculas.add(new Pelicula(3L, "Soul", 100, LocalDate.of(2020, 12, 25),
+                "Un músico descubre el sentido de la vida más allá de la muerte.", 8, null, null, null));
+    }*/
 
     public List<Pelicula> listarPeliculas() {
         return peliculaRepository.findAll();
@@ -147,6 +155,7 @@ public class PeliculaService {
             System.out.println("Procesando CSV: " + fichero + " en " + Thread.currentThread().getName());
 
             List<Pelicula> lista = new ArrayList<>();
+            List<Pelicula> peliculasBd = peliculaRepository.findAll();
 
             List<String> lineas = Files.readAllLines(fichero);
             lineas.remove(0); // suponemos encabezado
@@ -159,6 +168,20 @@ public class PeliculaService {
                 p.setFechaEstreno(LocalDate.parse(campos[2]));
                 p.setSinopsis(campos[3]);
                 lista.add(p);
+
+                /* PARA QUE NO SE IMPORTEN LAS PELICULAS QUE YA EXISTAN EN LA BASE DE DATOS
+                boolean existe = false;
+                for (Pelicula peli : peliculasBd) {
+                    if (p.getTitulo().equals(peli.getTitulo())) {
+                        existe = true;
+                        break; // ya existe, no hace falta seguir buscando
+                    }
+                }
+
+                if (!existe) {
+                    lista.add(p); // solo se añade si no estaba en la BD
+                }
+                 */
             }
 
             peliculaRepository.saveAll(lista);
@@ -178,6 +201,7 @@ public class PeliculaService {
             System.out.println("Procesando XML: " + fichero + " en " + Thread.currentThread().getName());
 
             List<Pelicula> lista = new ArrayList<>();
+            List<Pelicula> peliculasBd = peliculaRepository.findAll();
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -193,8 +217,21 @@ public class PeliculaService {
                 p.setDuracion(Integer.parseInt(e.getElementsByTagName("duracion").item(0).getTextContent()));
                 p.setFechaEstreno(LocalDate.parse(e.getElementsByTagName("fechaEstreno").item(0).getTextContent()));
                 p.setSinopsis(e.getElementsByTagName("sinopsis").item(0).getTextContent());
-
                 lista.add(p);
+
+                /* PARA QUE NO SE IMPORTEN LAS PELICULAS QUE YA EXISTAN EN LA BASE DE DATOS
+                boolean existe = false;
+                for (Pelicula peli : peliculasBd) {
+                    if (p.getTitulo().equals(peli.getTitulo())) {
+                        existe = true;
+                        break; // ya existe, no añadir
+                    }
+                }
+
+                if (!existe) {
+                    lista.add(p); // solo añadimos si no existe
+                }
+                 */
             }
 
             peliculaRepository.saveAll(lista);
