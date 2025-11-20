@@ -1,0 +1,20 @@
+<peliculas>
+    <pelicula>
+        <titulo>La La Land</titulo>
+        <duracion>128</duracion>
+        <fechaEstreno>2016-12-09</fechaEstreno>
+        <sinopsis>Una historia de amor entre músicos y soñadores</sinopsis>
+    </pelicula>
+    <pelicula>
+        <titulo>Mad Max Fury Road</titulo>
+        <duracion>120</duracion>
+        <fechaEstreno>2015-05-15</fechaEstreno>
+        <sinopsis>Una huida explosiva en un desierto posapocalíptico</sinopsis>
+    </pelicula>
+    <pelicula>
+        <titulo>Ratatouille</titulo>
+        <duracion>111</duracion>
+        <fechaEstreno>2007-06-29</fechaEstreno>
+        <sinopsis>Un ratón con talento culinario en París</sinopsis>
+    </pelicula>
+</peliculas>

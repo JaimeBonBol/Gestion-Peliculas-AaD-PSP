@@ -1,0 +1,20 @@
+<peliculas>
+    <pelicula>
+        <titulo>Forrest Gump</titulo>
+        <duracion>142</duracion>
+        <fechaEstreno>1994-07-06</fechaEstreno>
+        <sinopsis>La vida extraordinaria de un hombre sencillo</sinopsis>
+    </pelicula>
+    <pelicula>
+        <titulo>Blade Runner 2049</titulo>
+        <duracion>164</duracion>
+        <fechaEstreno>2017-10-06</fechaEstreno>
+        <sinopsis>Un replicante descubre un secreto oculto</sinopsis>
+    </pelicula>
+    <pelicula>
+        <titulo>The Truman Show</titulo>
+        <duracion>103</duracion>
+        <fechaEstreno>1998-06-05</fechaEstreno>
+        <sinopsis>Un hombre vive sin saber que toda su vida es un programa</sinopsis>
+    </pelicula>
+</peliculas>

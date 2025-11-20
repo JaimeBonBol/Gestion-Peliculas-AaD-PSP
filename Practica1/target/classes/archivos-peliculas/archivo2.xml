@@ -1,20 +1,20 @@
 <peliculas>
     <pelicula>
-        <titulo>Interstellar</titulo>
-        <duracion>169</duracion>
-        <fechaEstreno>2014-11-07</fechaEstreno>
-        <sinopsis>Exploradores espaciales</sinopsis>
+        <titulo>Shutter Island</titulo>
+        <duracion>138</duracion>
+        <fechaEstreno>2010-02-19</fechaEstreno>
+        <sinopsis>Un investigador llega a una isla llena de secretos</sinopsis>
     </pelicula>
     <pelicula>
-        <titulo>Soul</titulo>
-        <duracion>100</duracion>
-        <fechaEstreno>2020-12-25</fechaEstreno>
-        <sinopsis>Un músico descubre</sinopsis>
+        <titulo>Spirited Away</titulo>
+        <duracion>125</duracion>
+        <fechaEstreno>2001-07-20</fechaEstreno>
+        <sinopsis>Una niña atrapada en un mundo de espíritus</sinopsis>
     </pelicula>
     <pelicula>
-        <titulo>Batman</titulo>
-        <duracion>135</duracion>
-        <fechaEstreno>2016-12-25</fechaEstreno>
-        <sinopsis>Caballero oscuro</sinopsis>
+        <titulo>Jurassic Park</titulo>
+        <duracion>127</duracion>
+        <fechaEstreno>1993-06-11</fechaEstreno>
+        <sinopsis>Un parque de dinosaurios que se descontrola</sinopsis>
     </pelicula>
 </peliculas>

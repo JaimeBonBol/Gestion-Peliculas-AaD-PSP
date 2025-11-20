@@ -1,0 +1,5 @@
+Para el ejercicio 3, se introduce en la ruta el nombre del directorio desde el que se cargan los arhcivos dentro de resources, por ejemplo en mi caso tengo un directorio llamado "archivos-peliculas" por tanto el endpoint en Postman (ya que es un POST) es -> http://localhost:8081/api/peliculas/cargarPeliculas/archivos-peliculas20
+
+También he implementado para el ejercicio 3 la funcionalidad para comprobar si la pelicula ya existe en la base de datos, y en ese caso que no se añada de nuevo. Pero esto está comentado para que se añadan todas.
+
+Ejercicio 4. PAra este ejercicio se le pasa por la ruta el número de jurados que votan, por ejemplo -> http://localhost:8081/api/peliculas/api/oscar/100
