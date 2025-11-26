@@ -1,6 +1,5 @@
 package com.dam2.Practica1.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "actores")
-@Data
-@AllArgsConstructor
+@Table(name = "idiomas")
+@Data  // Lombok genera getters, setters, toString, equals, hashCode
+@AllArgsConstructor      // Genera constructor con todos los campos
 @NoArgsConstructor
-public class Actor {
+public class Idioma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +20,7 @@ public class Actor {
 
     private String nombre;
 
-    @ManyToMany(mappedBy = "actores")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "idiomas")
     private List<Pelicula> peliculas;
 
-    // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
-    public void addPelicula(Pelicula p){
-        peliculas.add(p);
-        p.getActores().add(this);
-    }
 }

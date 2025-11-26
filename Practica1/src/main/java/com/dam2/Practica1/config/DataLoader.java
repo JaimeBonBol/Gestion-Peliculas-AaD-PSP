@@ -11,7 +11,7 @@ import com.dam2.Practica1.repository.PeliculaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/*
 import java.time.LocalDate;
 import java.util.ArrayList;
 @Configuration
@@ -30,7 +30,7 @@ public class DataLoader {
             // =====================================================
             // 🚨 PROTECCIÓN: solo cargar datos si NO hay directores
             // =====================================================
-            if (directorRepo.count() > 0) {
+            if (directorRepo.count() >= 0) {
                 System.out.println(">>> Datos ya existentes. NO se carga DataLoader.");
                 return;
             }
@@ -159,32 +159,37 @@ public class DataLoader {
             // (Usando tus métodos de sincronización)
             // ======================================
             // COMO PROFESOR LO TIENE
-//            matthew.addPelicula(interstellar);
-//            hathaway.addPelicula(interstellar);
-//            foxx.addPelicula(soul);
+            matthew.addPelicula(interstellar);
+            hathaway.addPelicula(interstellar);
+            foxx.addPelicula(soul);
+            scarlett.addPelicula(jurassicWorld);
+            robert.addPelicula(batman);
+            brad.addPelicula(formula1);
 
 
-//            peliculaRepo.save(interstellar);
-//            peliculaRepo.save(soul);
-
-
-
-            // RELACIÓN MANY-TO-MANY
-            interstellar.addActor(matthew);
-            interstellar.addActor(hathaway);
-            soul.addActor(foxx);
-            jurassicWorld.addActor(scarlett);
-            batman.addActor(robert);
-            formula1.addActor(brad);
-
-            // Guardar el dueño: Pelicula
             peliculaRepo.save(interstellar);
             peliculaRepo.save(soul);
             peliculaRepo.save(jurassicWorld);
             peliculaRepo.save(batman);
             peliculaRepo.save(formula1);
 
+
+//            // RELACIÓN MANY-TO-MANY
+//            interstellar.addActor(matthew);
+//            interstellar.addActor(hathaway);
+//            soul.addActor(foxx);
+//            jurassicWorld.addActor(scarlett);
+//            batman.addActor(robert);
+//            formula1.addActor(brad);
+//
+//            // Guardar el dueño: Pelicula
+//            peliculaRepo.save(interstellar);
+//            peliculaRepo.save(soul);
+//            peliculaRepo.save(jurassicWorld);
+//            peliculaRepo.save(batman);
+//            peliculaRepo.save(formula1);
+
             System.out.println(">>> DATOS DE PRUEBA INSERTADOS CORRECTAMENTE");
         };
     }
-}
+}*/
