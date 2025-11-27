@@ -1,11 +1,13 @@
 package com.dam2.Practica1.web;
 
 
+import com.dam2.Practica1.DTO.PeliculaRequestDTO;
+import com.dam2.Practica1.DTO.PeliculaResponseDTO;
 import com.dam2.Practica1.domain.Pelicula;
 import com.dam2.Practica1.service.PeliculaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +20,45 @@ import java.util.List;
 @RequestMapping("/api/peliculas")
 @RequiredArgsConstructor
 public class PeliculaController {
-    private final PeliculaService service;
+    private final PeliculaService peliculaService;
 
-   /* @GetMapping
-    public List<Pelicula> listar() {
-        return service.listar();
-    }*/
+    /**
+     * CRUD
+     *
+     */
+
+    @GetMapping
+    public List<PeliculaResponseDTO> listarPeliculas(){
+        return peliculaService.listarPeliculas();
+    }
 
     @GetMapping("/{id}")
-    public Pelicula buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id);
+    public PeliculaResponseDTO buscarPeliculaPorId(@PathVariable Long id){
+        return peliculaService.buscarPeliculaPorId(id);
     }
 
     @PostMapping
-    public void agregar(@RequestBody Pelicula pelicula) {
-        service.agregar(pelicula);
+    public PeliculaResponseDTO agregarPelicula(@RequestBody @Valid PeliculaRequestDTO peliculaRequestDTO){
+        return peliculaService.agregarPelicula(peliculaRequestDTO);
     }
+
+    @PutMapping("/{id}")
+    public PeliculaResponseDTO actualizarPelicula(@PathVariable Long id, @RequestBody @Valid PeliculaRequestDTO peliculaRequestDTO){
+        return peliculaService.actualizarPelicula(id, peliculaRequestDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarPelicula(@PathVariable Long id){
+        peliculaService.eliminarPelicula(id);
+    }
+
 
     @GetMapping("/procesar")
     public String procesarPeliculas() {
         long inicio = System.currentTimeMillis();
-        service.tareaLenta("Interstellar");
-        service.tareaLenta("The Dark Knight");
-        service.tareaLenta("Soul");
+        peliculaService.tareaLenta("Interstellar");
+        peliculaService.tareaLenta("The Dark Knight");
+        peliculaService.tareaLenta("Soul");
         long fin = System.currentTimeMillis();
         return "Tiempo total: " + (fin - inicio) + " ms";
     }
@@ -49,9 +67,9 @@ public class PeliculaController {
     public String procesarAsync() {
         long inicio = System.currentTimeMillis();
 
-        var t1 = service.tareaLenta2("🍿 Interstellar");
-        var t2 = service.tareaLenta2("🦇 The Dark Knight");
-        var t3 = service.tareaLenta2("🎵 Soul");
+        var t1 = peliculaService.tareaLenta2("🍿 Interstellar");
+        var t2 = peliculaService.tareaLenta2("🦇 The Dark Knight");
+        var t3 = peliculaService.tareaLenta2("🎵 Soul");
 
         // Espera a que terminen todas las tareas
         CompletableFuture.allOf(t1, t2, t3).join();
@@ -62,7 +80,7 @@ public class PeliculaController {
 
     @GetMapping("/mejoresPeliculas")
     public List<Pelicula> listarMejoresPeliculas(){
-        return service.getMejoresPeliculas();
+        return peliculaService.getMejoresPeliculas();
     }
 
     /**
@@ -73,9 +91,9 @@ public class PeliculaController {
     public String reproducirPeliculasAsync(){
         long inicio = System.currentTimeMillis();
 
-        var t1 = service.reproducir("Interstellar");
-        var t2 = service.reproducir("The Dark Knight");
-        var t3 = service.reproducir("Soul");
+        var t1 = peliculaService.reproducir("Interstellar");
+        var t2 = peliculaService.reproducir("The Dark Knight");
+        var t3 = peliculaService.reproducir("Soul");
 
         // Espera a que terminen todas las tareas
         CompletableFuture.allOf(t1, t2, t3).join();
@@ -92,14 +110,9 @@ public class PeliculaController {
     public ResponseEntity<?> cargarPeliculasDirectorio(@PathVariable String nombreDirectorio) throws IOException {
         String rutaDir = "src/main/resources/" + nombreDirectorio;
 
-        service.importarCarpeta(rutaDir);
+        peliculaService.importarCarpeta(rutaDir);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Archivos importados correctamente");
-    }
-
-    @GetMapping("/peliculas")
-    public List<Pelicula> mostrarPeliculas(){
-        return service.listarPeliculas();
     }
 
 
@@ -110,7 +123,7 @@ public class PeliculaController {
      */
     @GetMapping("/api/oscar/{jurados}")
     public HashMap<String, Integer> votacionesOscars(@PathVariable int jurados) throws InterruptedException {
-        return service.votacionOscars(jurados);
+        return peliculaService.votacionOscars(jurados);
     }
 
 }

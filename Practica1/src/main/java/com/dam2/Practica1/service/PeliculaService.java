@@ -1,9 +1,14 @@
 package com.dam2.Practica1.service;
 
+import com.dam2.Practica1.DTO.PeliculaRequestDTO;
+import com.dam2.Practica1.DTO.PeliculaResponseDTO;
 import com.dam2.Practica1.domain.Pelicula;
-import com.dam2.Practica1.repository.PeliculaRepository;
+import com.dam2.Practica1.mapper.PeliculaMapper;
+import com.dam2.Practica1.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -32,41 +38,75 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class PeliculaService {
     private final List<Pelicula> peliculas = new ArrayList<>();
-    private final PeliculaRepository peliculaRepository;
     private final ImportarArchivoService importarArchivoService;
     private final VotarOscarsService votarOscarsService;
 
-    /*public PeliculaService() {
-        peliculas.add(new Pelicula(1L, "Interstellar", 169, LocalDate.of(2014, 11, 7),
-                "Exploradores espaciales buscan un nuevo hogar para la humanidad.", 10, null, null, null));
-        peliculas.add(new Pelicula(2L, "The Dark Knight", 152, LocalDate.of(2008, 7, 18),
-                "Batman enfrenta al Joker en una lucha por el alma de Gotham.", 5, null, null, null));
-        peliculas.add(new Pelicula(3L, "Soul", 100, LocalDate.of(2020, 12, 25),
-                "Un músico descubre el sentido de la vida más allá de la muerte.", 8, null, null, null));
-    }*/
+    private final PeliculaRepository peliculaRepository;
+    private final PeliculaMapper peliculaMapper;
 
-    public List<Pelicula> listarPeliculas() {
-        return peliculaRepository.findAll();
-    }
+    private final DirectorRepository directorRepository;
+    private final FichaTecnicaRepository fichaTecnicaRepository;
+    private final ActorRepository actorRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final IdiomaRepository idiomaRepository;
+    private final PlataformaRepository plataformaRepository;
+    private final CriticaRepository criticaRepository;
+    private final FuncionRepository funcionRepository;
 
-    public Pelicula buscarPorId(Long id) {
-        for (Pelicula p : peliculas) {
-            if (p.getId().equals(id)) {
-                return p;
-            }
+
+    /**
+     * CRUD
+     */
+
+    public List<PeliculaResponseDTO> listarPeliculas(){
+        List<Pelicula> peliculasBD = peliculaRepository.findAll();
+        List<PeliculaResponseDTO> peliculasResponseDTO = new ArrayList<>();
+
+        for (Pelicula pelicula : peliculasBD){
+            peliculasResponseDTO.add(peliculaMapper.toDto(pelicula));
         }
-        return null;
-        /*
-        * return peliculas.stream()                 // convierte la lista en un flujo de datos
-        .filter(p -> p.getId().equals(id)) // se queda solo con las películas cuyo id coincide
-        .findFirst()                       // toma la primera coincidencia (si existe)
-        .orElse(null);                     // devuelve esa película o null si no hay
-        * */
+
+        return peliculasResponseDTO;
     }
 
-    public void agregar(Pelicula pelicula) {
-        peliculas.add(pelicula);
+
+    public PeliculaResponseDTO buscarPeliculaPorId(Long id){
+        Pelicula pelicula = peliculaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Película no encontrada con id: " + id));
+
+        return peliculaMapper.toDto(pelicula);
     }
+
+    @Transactional
+    public PeliculaResponseDTO agregarPelicula(PeliculaRequestDTO peliculaRequestDTO){
+        Pelicula pelicula = peliculaMapper.toEntity(peliculaRequestDTO);
+
+        peliculaRepository.save(pelicula);
+
+        return peliculaMapper.toDto(pelicula);
+    }
+
+
+    // Actualiza la película, si no es posible se revierte (transacctional). Si no la encuentra lanza 404
+    @Transactional
+    public PeliculaResponseDTO actualizarPelicula(Long id, PeliculaRequestDTO peliculaRequestDTO){
+        Pelicula pelicula = peliculaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Película no encontrada con id: " + id));
+
+        peliculaMapper.updateEntity(pelicula, peliculaRequestDTO);
+
+        peliculaRepository.save(pelicula);
+
+        return peliculaMapper.toDto(pelicula);
+    }
+
+
+    // Elimina la película y no devuelve nada, si no la encuentra lanza código de error 404
+    @Transactional
+    public void eliminarPelicula(Long id){
+        Pelicula pelicula = peliculaRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Película no encontrada con id: " + id));
+
+        peliculaRepository.delete(pelicula);
+    }
+
 
     public String tareaLenta(String titulo) {
         try {
@@ -195,7 +235,5 @@ public class PeliculaService {
         return votarOscarsService.getVotacion();
 
     }
-
-
 
 }
