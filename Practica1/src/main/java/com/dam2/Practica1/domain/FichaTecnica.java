@@ -19,4 +19,9 @@ public class FichaTecnica {
     private String director;
     private int duracion;
     private String pais;
+
+
+    public String salidaFichaTecnica(){
+        return "Ficha técnica: " + id + " | " + director + " | " + duracion + " | " + pais;
+    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,16 +22,16 @@ public class Pelicula {
     @Column(nullable = false, length = 120)
     private String titulo;
 
-    private int duracion;              // minutos
+    private Integer duracion;              // minutos
 
     @Column(name = "fecha_estreno")
     private LocalDate fechaEstreno;
 
     private String sinopsis;
 
-    private int valoracion;
+    private Integer valoracion;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "ficha_id") // FK en la tabla Pelicula que apunta a FichaTecnica.
     private FichaTecnica fichaTecnica;
 
@@ -46,7 +47,7 @@ public class Pelicula {
             inverseJoinColumns = @JoinColumn(name = "actor_id")     // FK de la otra entidad
     )
     @JsonIgnore
-    private List<Actor> actores;
+    private List<Actor> actores = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -54,7 +55,7 @@ public class Pelicula {
             joinColumns = @JoinColumn(name = "pelicula_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private List<Categoria> categorias;
+    private List<Categoria> categorias = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -62,7 +63,7 @@ public class Pelicula {
             joinColumns = @JoinColumn(name = "pelicula_id"),
             inverseJoinColumns = @JoinColumn(name = "idioma_id")
     )
-    private List<Idioma> idiomas;
+    private List<Idioma> idiomas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -70,26 +71,55 @@ public class Pelicula {
             joinColumns = @JoinColumn(name = "pelicula_id"),
             inverseJoinColumns = @JoinColumn(name = "plataforma_id")
     )
-    private List<Plataforma> plataformas;
+    private List<Plataforma> plataformas = new ArrayList<>();
 
     @OneToMany(mappedBy = "pelicula")
-    private List<Funcion> funciones;
+    private List<Funcion> funciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "pelicula")
-    private List<Critica> criticas;
+    private List<Critica> criticas = new ArrayList<>();
 
-    // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
-//    public void addActor(Actor a){
-//        if (!actores.contains(a)) {
-//            actores.add(a);
-//        }
-//        if (!a.getPeliculas().contains(this)) {
-//            a.getPeliculas().add(this);
-//        }
+
+
+//    public void addActor(Actor actor){
+//        actores.add(actor);
+//        actor.getPeliculas().add(this);
 //    }
 
+    // HELPERS ManyToMany
     public void addActor(Actor actor){
-        actores.add(actor);
-        actor.getPeliculas().add(this);
+        if (!actores.contains(actor)){
+            actores.add(actor);
+        }
+        if (!actor.getPeliculas().contains(this)){
+            actor.getPeliculas().add(this);
+        }
+    }
+
+    public void addCategoria(Categoria categoria){
+        if (!categorias.contains(categoria)){
+            categorias.add(categoria);
+        }
+        if (!categoria.getPeliculas().contains(this)){
+            categoria.getPeliculas().add(this);
+        }
+    }
+
+    public void addIdioma(Idioma idioma){
+        if (!idiomas.contains(idioma)){
+            idiomas.add(idioma);
+        }
+        if (!idioma.getPeliculas().contains(this)){
+            idioma.getPeliculas().add(this);
+        }
+    }
+
+    public void addPlataforma(Plataforma plataforma){
+        if (!plataformas.contains(plataforma)){
+            plataformas.add(plataforma);
+        }
+        if (!plataforma.getPeliculas().contains(this)){
+            plataforma.getPeliculas().add(this);
+        }
     }
 }

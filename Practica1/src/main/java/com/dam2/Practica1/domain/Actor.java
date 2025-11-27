@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Actor {
 
     @ManyToMany(mappedBy = "actores")
     @JsonIgnore
-    private List<Pelicula> peliculas;
+    private List<Pelicula> peliculas = new ArrayList<>();
 
     // Mantener sincronizada una relación bidireccional Actor <-> Pelicula
     public void addPelicula(Pelicula p){
