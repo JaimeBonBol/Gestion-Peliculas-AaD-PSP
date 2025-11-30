@@ -7,6 +7,7 @@ import com.dam2.Practica1.DTO.FuncionResponseDTO;
 import com.dam2.Practica1.service.FuncionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class FuncionController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public FuncionResponseDTO agregarFuncion(@RequestBody @Valid FuncionRequestDTO funcionRequestDTO) {
         return funcionService.agregarFuncion(funcionRequestDTO);
     }
@@ -43,6 +45,7 @@ public class FuncionController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarFuncion(@PathVariable Long id) {
         funcionService.eliminarFuncion(id);
     }

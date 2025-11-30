@@ -5,6 +5,7 @@ import com.dam2.Practica1.DTO.PlataformaResponseDTO;
 import com.dam2.Practica1.service.PlataformaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class PlataformaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PlataformaResponseDTO agregarPlataforma(@RequestBody @Valid PlataformaRequestDTO plataformaRequestDTO) {
         return plataformaService.agregarPlataforma(plataformaRequestDTO);
     }
@@ -41,6 +43,7 @@ public class PlataformaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarPlataforma(@PathVariable Long id) {
         plataformaService.eliminarPlataforma(id);
     }

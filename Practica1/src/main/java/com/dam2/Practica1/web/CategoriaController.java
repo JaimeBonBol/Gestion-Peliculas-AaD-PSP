@@ -7,6 +7,7 @@ import com.dam2.Practica1.DTO.PlataformaResponseDTO;
 import com.dam2.Practica1.service.CategoriaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoriaResponseDTO agregarCategoria(@RequestBody @Valid CategoriaRequestDTO categoriaRequestDTO) {
         return categoriaService.agregarCategoria(categoriaRequestDTO);
     }
@@ -43,6 +45,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarCategoria(@PathVariable Long id) {
         categoriaService.eliminarCategoria(id);
     }

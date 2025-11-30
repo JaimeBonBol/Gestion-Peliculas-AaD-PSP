@@ -5,6 +5,7 @@ import com.dam2.Practica1.DTO.ActorResponseDTO;
 import com.dam2.Practica1.service.ActorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ActorController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ActorResponseDTO agregarActor(@RequestBody @Valid ActorRequestDTO actorRequestDTO) {
         return actorService.agregarActor(actorRequestDTO);
     }
@@ -37,6 +39,7 @@ public class ActorController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarActor(@PathVariable Long id) {
         actorService.eliminarActor(id);
     }

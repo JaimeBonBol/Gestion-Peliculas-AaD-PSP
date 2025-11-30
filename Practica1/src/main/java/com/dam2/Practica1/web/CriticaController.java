@@ -5,6 +5,7 @@ import com.dam2.Practica1.DTO.CriticaResponseDTO;
 import com.dam2.Practica1.service.CriticaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class CriticaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CriticaResponseDTO agregarCritica(@RequestBody @Valid CriticaRequestDTO dto) {
         return criticaService.agregarCritica(dto);
     }
@@ -37,6 +39,7 @@ public class CriticaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarCritica(@PathVariable Long id) {
         criticaService.eliminarCritica(id);
     }

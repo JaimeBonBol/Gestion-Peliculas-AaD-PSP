@@ -5,6 +5,7 @@ import com.dam2.Practica1.DTO.DirectorResponseDTO;
 import com.dam2.Practica1.service.DirectorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DirectorController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public DirectorResponseDTO agregarDirector(@RequestBody @Valid DirectorRequestDTO directorRequestDTO) {
         return directorService.agregarDirector(directorRequestDTO);
     }
@@ -37,6 +39,7 @@ public class DirectorController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarDirector(@PathVariable Long id) {
         directorService.eliminarDirector(id);
     }

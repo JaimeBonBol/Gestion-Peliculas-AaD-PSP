@@ -8,6 +8,7 @@ import com.dam2.Practica1.domain.Sala;
 import com.dam2.Practica1.service.SalaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class SalaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public SalaResponseDTO agregarSala(@RequestBody @Valid SalaRequestDTO salaRequestDTO) {
         return salaService.agregarSala(salaRequestDTO);
     }
@@ -44,6 +46,7 @@ public class SalaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarSala(@PathVariable Long id) {
         salaService.eliminarSala(id);
     }

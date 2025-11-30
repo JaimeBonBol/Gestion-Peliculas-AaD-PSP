@@ -5,6 +5,7 @@ import com.dam2.Practica1.DTO.UsuarioResponseDTO;
 import com.dam2.Practica1.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UsuarioResponseDTO agregarUsuario(@RequestBody @Valid UsuarioRequestDTO dto) {
         return usuarioService.agregarUsuario(dto);
     }
@@ -37,6 +39,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
     }

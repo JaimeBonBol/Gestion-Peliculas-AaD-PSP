@@ -38,6 +38,7 @@ public class PeliculaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PeliculaResponseDTO agregarPelicula(@RequestBody @Valid PeliculaRequestDTO peliculaRequestDTO){
         return peliculaService.agregarPelicula(peliculaRequestDTO);
     }
@@ -48,6 +49,7 @@ public class PeliculaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarPelicula(@PathVariable Long id){
         peliculaService.eliminarPelicula(id);
     }

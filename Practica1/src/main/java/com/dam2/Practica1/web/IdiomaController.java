@@ -7,6 +7,7 @@ import com.dam2.Practica1.DTO.IdiomaResponseDTO;
 import com.dam2.Practica1.service.IdiomaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class IdiomaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public IdiomaResponseDTO agregarIdioma(@RequestBody @Valid IdiomaRequestDTO idiomaRequestDTO) {
         return idiomaService.agregarIdioma(idiomaRequestDTO);
     }
@@ -43,6 +45,7 @@ public class IdiomaController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarIdioma(@PathVariable Long id) {
         idiomaService.eliminarIdioma(id);
     }
