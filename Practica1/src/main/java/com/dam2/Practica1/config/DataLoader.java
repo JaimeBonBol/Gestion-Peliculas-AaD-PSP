@@ -203,7 +203,7 @@
 //        };
 //    }
 //}
-
+/*
 package com.dam2.Practica1.config;
 
 import com.dam2.Practica1.domain.*;
@@ -400,3 +400,4 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("✅ Datos de prueba COMPLETOS cargados correctamente");
     }
 }
+*/
