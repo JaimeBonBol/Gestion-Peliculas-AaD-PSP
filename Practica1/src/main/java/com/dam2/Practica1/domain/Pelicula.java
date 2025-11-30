@@ -31,10 +31,6 @@ public class Pelicula {
 
     private Integer valoracion;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "ficha_id") // FK en la tabla Pelicula que apunta a FichaTecnica.
-    private FichaTecnica fichaTecnica;
-
     @ManyToOne
     @JoinColumn(name = "director_id")
     @JsonManagedReference

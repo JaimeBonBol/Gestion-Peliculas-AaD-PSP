@@ -45,7 +45,6 @@ public class PeliculaService {
     private final PeliculaMapper peliculaMapper;
 
     private final DirectorRepository directorRepository;
-    private final FichaTecnicaRepository fichaTecnicaRepository;
     private final ActorRepository actorRepository;
     private final CategoriaRepository categoriaRepository;
     private final IdiomaRepository idiomaRepository;
