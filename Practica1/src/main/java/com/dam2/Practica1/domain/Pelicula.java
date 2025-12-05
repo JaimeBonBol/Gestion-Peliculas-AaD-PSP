@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "peliculas")
-@Data  // ✅ Lombok genera getters, setters, toString, equals, hashCode
-@AllArgsConstructor      // ✅ genera constructor con todos los campos
+@Data  // Lombok genera getters, setters, toString, equals, hashCode
+@AllArgsConstructor      // genera constructor con todos los campos
 @NoArgsConstructor
 public class Pelicula {
 
